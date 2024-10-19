@@ -1,0 +1,105 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: retrom
+  replicas: {{ .Values.retrom.replicas }}
+  template:
+    metadata:
+      labels:
+        app: retrom
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.retrom.image.repository }}:{{ .Values.retrom.image.tag }}"
+        imagePullPolicy: {{ .Values.retrom.image.pullPolicy }}
+        ports:
+        - containerPort: 5101
+          protocol: TCP
+        - containerPort: 3000
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /config
+          name: retrom-config
+        {{- range .Values.retrom.volumes.libraries }}
+        - mountPath: {{ .mountPath | default "" }}
+          name: {{ .name }}
+        {{- end }}
+        resources:
+          limits:
+            cpu: {{ .Values.retrom.resources.limits.cpu }}
+            memory: {{ .Values.retrom.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.retrom.resources.requests.cpu }}
+            memory: {{ .Values.retrom.resources.requests.memory }}
+      volumes:
+      {{- range .Values.retrom.volumes.libraries }}
+      - name: {{ .name }}
+        {{- if eq .type "nfs" }}
+        nfs:
+          server: {{ .server }}
+          path: {{ .path }}
+          readOnly: {{ .readOnly }}
+        {{- else if eq .type "pvc" }}
+        persistentVolumeClaim:
+          claimName: {{ .claimName }}
+        {{- end }}
+      {{- end }}
+      - name: retrom-config
+        {{- if eq .Values.retrom.volumes.config.type "nfs" }}
+        nfs:
+          server: {{ .Values.retrom.volumes.config.server }}
+          path: {{ .Values.retrom.volumes.config.path }}
+          readOnly: {{ .Values.retrom.volumes.config.readOnly }}
+        {{- else if eq .Values.retrom.volumes.config.type "pvc" }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.retrom.volumes.config.claimName }}
+        {{- end }}
+---
+{{- if .Values.postgres.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-db
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: retrom-db
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-db
+        image: postgres:16
+        imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: {{ .Chart.Name }}-db-data
+          subPath: data
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        resources:
+          limits:
+            cpu: {{ .Values.postgres.resources.limits.cpu }}
+            memory: {{ .Values.postgres.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.postgres.resources.requests.cpu }}
+            memory: {{ .Values.postgres.resources.requests.memory }}
+        env:
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.postgres.password }}
+      volumes:
+        - name: {{ .Chart.Name }}-db-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.postgres.pvc }}
+{{- end }}

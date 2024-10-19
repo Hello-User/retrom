@@ -1,0 +1,59 @@
+namespace: retrom-helm
+
+retrom:
+  replicas: 1
+  image:
+    repository: ghcr.io/jmberesford/retrom-service
+    tag: retrom-v0.2.7
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: "2"
+      memory: 4Gi
+    requests:
+      cpu: 200m
+      memory: 2Gi
+  volumes:
+    libraries:
+      - name: retrom-library1
+        type: pvc
+        claimName: retrom-library1-pvc
+        accessMode: ReadWriteMany
+        mountPath: /library1
+        size: 1Mi
+    config:
+      type: pvc
+      claimName: retrom-config
+  type: NodePort
+  ports:
+    backend:
+      port: 5101
+      nodePort:
+    frontend:
+      port: 3000
+      nodePort:
+
+postgres:
+  enabled: true
+  replicas: 1
+  image:
+    repository: postgres
+    tag: 16
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: "2"
+      memory: 4Gi
+    requests:
+      cpu: 200m
+      memory: 2Gi
+  password: please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)
+  pvc: retrom-db-data
+  type: ClusterIP
+  ports:
+    db:
+      port: 5432
+  pvc:
+    storageClass: local
+    accessMode: ReadWriteMany
+    size: 16Gi

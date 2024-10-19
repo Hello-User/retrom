@@ -1,0 +1,31 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .Chart.Name }}-db-data
+  namespace: {{ .Values.namespace }}
+spec:
+  storageClassName: {{ .Values.postgres.pvc.storageClass }}
+  accessModes:
+    - {{ .Values.postgres.pvc.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.postgres.pvc.size }}
+
+{{- range .Values.retrom.volumes.libraries }}
+{{- if eq .type "pvc" }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .claimName }}
+  namespace: {{ $.Values.namespace }}
+spec:
+  storageClassName: {{ .storageClass }}
+  accessModes:
+    - {{ .accessMode }}
+  resources:
+    requests:
+      storage: {{ .size }}
+{{- end }}
+{{- end }}

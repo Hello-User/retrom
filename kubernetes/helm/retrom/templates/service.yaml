@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: retrom
+spec:
+  selector:
+    app: {{ .Chart.Name }}
+  ports:
+  - protocol: TCP
+    name: retrom-backend
+    port: {{ .Values.retrom.ports.backend.port }}
+    targetPort: {{ .Values.retrom.ports.backend.port }}
+    {{- if eq .Values.retrom.type "NodePort" }}
+    nodePort: {{ .Values.retrom.ports.backend.nodePort }}
+    {{- end }}
+  - protocol: TCP
+    name: retrom-frontend
+    port: {{ .Values.retrom.ports.frontend.port }}
+    targetPort: {{ .Values.retrom.ports.frontend.port }}
+    {{- if eq .Values.retrom.type "NodePort" }}
+    nodePort: {{ .Values.retrom.ports.backend.nodePort }}
+    {{- end }}
+  type: {{ .Values.retrom.type }}
+
+---
+{{- if .Values.postgres.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-db
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: retrom-db
+spec:
+  selector:
+    app: {{ .Chart.Name }}-db
+  ports:
+  - protocol: TCP
+    name: retrom-db
+    port: {{ .Values.postgres.ports.db.port }}
+    targetPort: {{ .Values.postgres.ports.db.port }}
+  type: {{ .Values.postgres.type }}
+{{- end }}
