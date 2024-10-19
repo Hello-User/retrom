@@ -49,5 +49,5 @@ postgres:
       port: 5432
   pvc:
     storageClass: longhorn
-    accessMode: ReadWriteMany
+    accessMode: ReadWriteOnce
     size: 1Gi
