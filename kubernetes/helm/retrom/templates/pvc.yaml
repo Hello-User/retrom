@@ -29,3 +29,19 @@ spec:
       storage: {{ .size }}
 {{- end }}
 {{- end }}
+
+{{- if eq .Values.retrom.volumes.config.type "pvc" }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ .claimName }}
+  namespace: {{ $.Values.namespace }}
+spec:
+  storageClassName: {{ .storageClass }}
+  accessModes:
+    - {{ .accessMode }}
+  resources:
+    requests:
+      storage: {{ .size }}
+{{- end }}

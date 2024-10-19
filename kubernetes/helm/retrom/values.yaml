@@ -21,9 +21,12 @@ retrom:
         accessMode: ReadWriteMany
         mountPath: /library1
         size: 1Mi
+        storageClass: emptyDir
     config:
       type: pvc
       claimName: retrom-config
+      storageClass: emptyDir
+      size: 1Mi
   type: NodePort
   ports:
     backend:
@@ -53,6 +56,6 @@ postgres:
     db:
       port: 5432
   pvc:
-    storageClass: local
+    storageClass: emptyDir
     accessMode: ReadWriteMany
     size: 1Gi
