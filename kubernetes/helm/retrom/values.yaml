@@ -35,7 +35,6 @@ retrom:
 
 postgres:
   enabled: true
-  replicas: 1
   image:
     pullPolicy: Always
   resources:
