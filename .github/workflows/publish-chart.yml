@@ -60,8 +60,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
-      - name: Publish Helm chart to GitHub Pages
-        uses: stefanprodan/helm-gh-pages@0ad2bb377311d61ac04ad9eb6f252fb68e207260 # v1.7.0
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          linting: off
+          charts_dir: charts
+          config: './.github/configs/cr.yaml'
+        env:
+          CR_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          CR_RELEASE_NAME_TEMPLATE: '{{ .Version }}-helm'
