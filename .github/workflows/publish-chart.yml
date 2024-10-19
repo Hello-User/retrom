@@ -43,7 +43,7 @@ jobs:
       - name: Package and push helm chart
         run: |
           helm package ./kubernetes/helm/retrom --version ${{ steps.set-variables.outputs.VERSION }}
-          helm push ./sample-app-chart-${{ steps.set-variables.outputs.VERSION }}.tgz oci://${{ steps.set-variables.outputs.REPOSITORY }}/charts          
+          helm push ./retrom-${{ steps.set-variables.outputs.VERSION }}.tgz oci://${{ steps.set-variables.outputs.REPOSITORY }}/charts          
   
   publish-helm-chart:
     permissions:
