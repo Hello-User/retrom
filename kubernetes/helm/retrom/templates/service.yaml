@@ -11,15 +11,15 @@ spec:
   ports:
   - protocol: TCP
     name: retrom-backend
-    port: {{ .Values.retrom.ports.backend.port }}
-    targetPort: {{ .Values.retrom.ports.backend.port }}
+    port: 5101
+    targetPort: 5101
     {{- if eq .Values.retrom.service.type "NodePort" }}
     nodePort: {{ .Values.retrom.ports.backend.nodePort }}
     {{- end }}
   - protocol: TCP
     name: retrom-frontend
-    port: {{ .Values.retrom.ports.frontend.port }}
-    targetPort: {{ .Values.retrom.ports.frontend.port }}
+    port: 3000
+    targetPort: 3000
     {{- if eq .Values.retrom.service.type "NodePort" }}
     nodePort: {{ .Values.retrom.ports.frontend.nodePort }}
     {{- end }}
@@ -40,7 +40,7 @@ spec:
   ports:
   - protocol: TCP
     name: retrom-db
-    port: {{ .Values.postgres.ports.db.port }}
-    targetPort: {{ .Values.postgres.ports.db.port }}
+    port: 5432
+    targetPort: 5432
   type: {{ .Values.postgres.service.type }}
 {{- end }}

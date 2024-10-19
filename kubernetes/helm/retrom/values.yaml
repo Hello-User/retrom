@@ -27,10 +27,8 @@ retrom:
     type: NodePort
   ports:
     backend:
-      port: 5101
       nodePort: 31110
     frontend:
-      port: 3000
       nodePort: 31111
 
 postgres:
