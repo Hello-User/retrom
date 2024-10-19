@@ -2,7 +2,7 @@
 
 A centralized game library/collection management service with a focus on emulation. Configure once, play anywhere.
 
-![Version: 0.2.6](https://img.shields.io/badge/Version-0.2.6-informational?style=flat-square)
+![Version: 0.2.7](https://img.shields.io/badge/Version-0.2.7-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 ![AppVersion: 0.2.7](https://img.shields.io/badge/AppVersion-0.2.7-informational?style=flat-square)
 
@@ -15,7 +15,7 @@ A centralized game library/collection management service with a focus on emulati
 | postgres.image.pullPolicy | string | `"Always"` |  |
 | postgres.password | string | `"please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)"` |  |
 | postgres.ports.db.port | int | `5432` |  |
-| postgres.pvc.accessMode | string | `"ReadWriteMany"` |  |
+| postgres.pvc.accessMode | string | `"ReadWriteOnce"` |  |
 | postgres.pvc.size | string | `"1Gi"` |  |
 | postgres.pvc.storageClass | string | `"longhorn"` |  |
 | postgres.replicas | int | `1` |  |
