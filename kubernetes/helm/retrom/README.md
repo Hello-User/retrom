@@ -17,9 +17,8 @@ A centralized game library/collection management service with a focus on emulati
 | postgres.image.tag | int | `16` |  |
 | postgres.password | string | `"please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)"` |  |
 | postgres.ports.db.port | int | `5432` |  |
-| postgres.pvc | string | `"retrom-db-data"` |  |
 | postgres.pvc.accessMode | string | `"ReadWriteMany"` |  |
-| postgres.pvc.size | string | `"16Gi"` |  |
+| postgres.pvc.size | string | `"1Gi"` |  |
 | postgres.pvc.storageClass | string | `"local"` |  |
 | postgres.replicas | int | `1` |  |
 | postgres.resources.limits.cpu | string | `"2"` |  |
