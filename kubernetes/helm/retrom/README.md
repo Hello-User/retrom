@@ -21,12 +21,12 @@ A centralized game library/collection management service with a focus on emulati
 | postgres.replicas | int | `1` |  |
 | postgres.resources.limits.cpu | string | `"2"` |  |
 | postgres.resources.limits.memory | string | `"4Gi"` |  |
-| postgres.type | string | `"ClusterIP"` |  |
+| postgres.service.type | string | `"ClusterIP"` |  |
 | retrom.image.pullPolicy | string | `"Always"` |  |
 | retrom.image.tag | string | `"latest"` |  |
-| retrom.ports.backend.nodePort | string | `nil` |  |
+| retrom.ports.backend.nodePort | int | `31110` |  |
 | retrom.ports.backend.port | int | `5101` |  |
-| retrom.ports.frontend.nodePort | string | `nil` |  |
+| retrom.ports.frontend.nodePort | int | `31111` |  |
 | retrom.ports.frontend.port | int | `3000` |  |
 | retrom.replicas | int | `1` |  |
 | retrom.resources.limits.cpu | string | `"2"` |  |
