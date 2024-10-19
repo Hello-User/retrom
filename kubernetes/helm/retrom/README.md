@@ -2,7 +2,7 @@
 
 A centralized game library/collection management service with a focus on emulation. Configure once, play anywhere.
 
-![Version: 0.1.8](https://img.shields.io/badge/Version-0.1.8-informational?style=flat-square)
+![Version: 0.2.3](https://img.shields.io/badge/Version-0.2.3-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 ![AppVersion: 0.2.7](https://img.shields.io/badge/AppVersion-0.2.7-informational?style=flat-square)
 
@@ -13,22 +13,17 @@ A centralized game library/collection management service with a focus on emulati
 | namespace | string | `"retrom-helm"` |  |
 | postgres.enabled | bool | `true` |  |
 | postgres.image.pullPolicy | string | `"Always"` |  |
-| postgres.image.repository | string | `"postgres"` |  |
-| postgres.image.tag | int | `16` |  |
 | postgres.password | string | `"please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)"` |  |
 | postgres.ports.db.port | int | `5432` |  |
 | postgres.pvc.accessMode | string | `"ReadWriteMany"` |  |
 | postgres.pvc.size | string | `"1Gi"` |  |
-| postgres.pvc.storageClass | string | `"local"` |  |
+| postgres.pvc.storageClass | string | `"longhorn"` |  |
 | postgres.replicas | int | `1` |  |
 | postgres.resources.limits.cpu | string | `"2"` |  |
 | postgres.resources.limits.memory | string | `"4Gi"` |  |
-| postgres.resources.requests.cpu | string | `"200m"` |  |
-| postgres.resources.requests.memory | string | `"2Gi"` |  |
 | postgres.type | string | `"ClusterIP"` |  |
 | retrom.image.pullPolicy | string | `"Always"` |  |
-| retrom.image.repository | string | `"ghcr.io/jmberesford/retrom-service"` |  |
-| retrom.image.tag | string | `"retrom-v0.2.7"` |  |
+| retrom.image.tag | string | `"latest"` |  |
 | retrom.ports.backend.nodePort | string | `nil` |  |
 | retrom.ports.backend.port | int | `5101` |  |
 | retrom.ports.frontend.nodePort | string | `nil` |  |
@@ -36,16 +31,17 @@ A centralized game library/collection management service with a focus on emulati
 | retrom.replicas | int | `1` |  |
 | retrom.resources.limits.cpu | string | `"2"` |  |
 | retrom.resources.limits.memory | string | `"4Gi"` |  |
-| retrom.resources.requests.cpu | string | `"200m"` |  |
-| retrom.resources.requests.memory | string | `"2Gi"` |  |
 | retrom.type | string | `"NodePort"` |  |
 | retrom.volumes.config.claimName | string | `"retrom-config"` |  |
+| retrom.volumes.config.size | string | `"1Mi"` |  |
+| retrom.volumes.config.storageClass | string | `"nfs"` |  |
 | retrom.volumes.config.type | string | `"pvc"` |  |
 | retrom.volumes.libraries[0].accessMode | string | `"ReadWriteMany"` |  |
 | retrom.volumes.libraries[0].claimName | string | `"retrom-library1-pvc"` |  |
 | retrom.volumes.libraries[0].mountPath | string | `"/library1"` |  |
 | retrom.volumes.libraries[0].name | string | `"retrom-library1"` |  |
 | retrom.volumes.libraries[0].size | string | `"1Mi"` |  |
+| retrom.volumes.libraries[0].storageClass | string | `"nfs"` |  |
 | retrom.volumes.libraries[0].type | string | `"pvc"` |  |
 
 ----------------------------------------------
