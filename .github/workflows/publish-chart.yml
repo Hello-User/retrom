@@ -8,7 +8,8 @@ on:
       - 'kubernetes/helm/**'
   
   workflow_dispatch:
-
+env:
+  HELM_DOCS_VERSION: '1.14.2'
 jobs:
   package-helm-chart:
     permissions:
