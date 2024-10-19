@@ -50,11 +50,7 @@
           with:
             registry: ghcr.io
             username: ${{ github.actor }}
-            password: ${{ github.token }}
-        - name: Package and push helm chart
-          run: |
-            helm package ./kubernetes/helm/retrom --version ${{ steps.set-variables.outputs.VERSION }}
-            helm push ./retrom-chart-${{ steps.set-variables.outputs.VERSION }}.tgz oci://${{ steps.set-variables.outputs.REPOSITORY }}/charts          
+            password: ${{ github.token }}       
         - name: Run chart-releaser
           uses: helm/chart-releaser-action@v1.6.0
           with:
@@ -63,6 +59,10 @@
           env:
             CR_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
             CR_RELEASE_NAME_TEMPLATE: '{{ .Version }}-helm'
+        - name: Package and push helm chart
+          run: |
+            helm package ./kubernetes/helm/retrom --version ${{ .VERSION }}
+            helm push ./retrom-chart-${{ .VERSION }}.tgz oci://${{ .REPOSITORY }}/charts
         - uses: oras-project/setup-oras@v1
           with:
             version: 1.2.0
