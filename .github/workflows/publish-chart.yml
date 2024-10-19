@@ -61,8 +61,8 @@
             CR_RELEASE_NAME_TEMPLATE: '{{ .Version }}-helm'
         - name: Package and push helm chart
           run: |
-            helm package ./kubernetes/helm/retrom --version '{{ .VERSION }}''
-            helm push ./retrom-chart-${{ .VERSION }}.tgz oci://'{{ .REPOSITORY }}'/charts
+            helm package ./kubernetes/helm/retrom --version '{{ .Version }}''
+            helm push ./retrom-chart-${{ .Version }}.tgz oci://'{{ .Repository }}'/charts
         - uses: oras-project/setup-oras@v1
           with:
             version: 1.2.0
