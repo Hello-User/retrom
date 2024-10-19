@@ -2,7 +2,7 @@
 
 A centralized game library/collection management service with a focus on emulation. Configure once, play anywhere.
 
-![Version: 0.2.13](https://img.shields.io/badge/Version-0.2.13-informational?style=flat-square)
+![Version: 0.2.14](https://img.shields.io/badge/Version-0.2.14-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 ![AppVersion: 0.2.7](https://img.shields.io/badge/AppVersion-0.2.7-informational?style=flat-square)
 
@@ -11,24 +11,22 @@ A centralized game library/collection management service with a focus on emulati
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | namespace | string | `"retrom-helm"` |  |
-| postgres.enabled | bool | `true` |  |
+| postgres.enabled | bool | `true` | Optional: Disable if you run your own postgres server. |
 | postgres.image.pullPolicy | string | `"Always"` |  |
-| postgres.password | string | `"please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)"` |  |
-| postgres.ports.db.port | int | `5432` |  |
-| postgres.pvc.accessMode | string | `"ReadWriteOnce"` |  |
-| postgres.pvc.size | string | `"1Gi"` |  |
-| postgres.pvc.storageClass | string | `"longhorn"` |  |
+| postgres.password | string | `"please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)"` | Required: password for the postgres user. The username and database name will be "postgres". |
+| postgres.pvc | object | `{"accessMode":"ReadWriteOnce","size":"1Gi","storageClass":"longhorn"}` | Required: storage for the postgres database |
+| postgres.pvc.size | string | `"1Gi"` | Optional: Maximum size of the database |
+| postgres.pvc.storageClass | string | `"longhorn"` | Required: Specify a StorageClass where the database will be stored |
 | postgres.resources.limits.cpu | string | `"2"` |  |
 | postgres.resources.limits.memory | string | `"4Gi"` |  |
-| postgres.service.type | string | `"ClusterIP"` |  |
 | retrom.image.pullPolicy | string | `"Always"` |  |
 | retrom.image.tag | string | `"latest"` |  |
-| retrom.ports.backend.nodePort | int | `31110` |  |
-| retrom.ports.frontend.nodePort | int | `31111` |  |
+| retrom.ports.backend.nodePort | int | `31110` | Optional: Port on which the service is exposed (when type is NodePort) |
+| retrom.ports.frontend.nodePort | int | `31111` | Optional: Port on which the web ui is exposed (when type is NodePort) |
 | retrom.replicas | int | `1` |  |
 | retrom.resources.limits.cpu | string | `"2"` |  |
 | retrom.resources.limits.memory | string | `"4Gi"` |  |
-| retrom.service.type | string | `"NodePort"` |  |
+| retrom.service | object | `{"type":"NodePort"}` | Optional: Cluster network service type |
 | retrom.volumes.config.path | string | `"<nfs_path>/config"` |  |
 | retrom.volumes.config.readOnly | bool | `false` |  |
 | retrom.volumes.config.server | string | `"<server_ip>"` |  |
@@ -43,7 +41,7 @@ A centralized game library/collection management service with a focus on emulati
 | retrom.volumes.libraries[0].storageClass | string | `"nfs"` |  |
 | retrom.volumes.libraries[0].type | string | `"pvc"` |  |
 
-## Example Values
+## Example Values and Retrom Config
 ```yaml
 namespace: retrom
 
@@ -67,6 +65,24 @@ postgres:
     storageClass: longhorn
     accessMode: ReadWriteMany
     size: 1Gi
+```
+```json
+{
+    "connection": {
+      "port": 5101,
+      "db_url": "postgres://postgres:please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)@retrom-db.retrom.svc.cluster.local/postgres"
+    },
+    "content_directories": [
+      {
+        "path": "/library1",
+        "storage_type": "MultiFileGame"
+      }
+    ],
+    "igdb": {
+      "client_secret": "super_secret_client_secret!!!1",
+      "client_id": "my_IGDB_ID_1234"
+    }
+  }
 ```
 
 ----------------------------------------------
