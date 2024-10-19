@@ -2,7 +2,7 @@
 
 A centralized game library/collection management service with a focus on emulation. Configure once, play anywhere.
 
-![Version: 0.2.11](https://img.shields.io/badge/Version-0.2.11-informational?style=flat-square)
+![Version: 0.2.12](https://img.shields.io/badge/Version-0.2.12-informational?style=flat-square)
 ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 ![AppVersion: 0.2.7](https://img.shields.io/badge/AppVersion-0.2.7-informational?style=flat-square)
 
@@ -24,9 +24,7 @@ A centralized game library/collection management service with a focus on emulati
 | retrom.image.pullPolicy | string | `"Always"` |  |
 | retrom.image.tag | string | `"latest"` |  |
 | retrom.ports.backend.nodePort | int | `31110` |  |
-| retrom.ports.backend.port | int | `5101` |  |
 | retrom.ports.frontend.nodePort | int | `31111` |  |
-| retrom.ports.frontend.port | int | `3000` |  |
 | retrom.replicas | int | `1` |  |
 | retrom.resources.limits.cpu | string | `"2"` |  |
 | retrom.resources.limits.memory | string | `"4Gi"` |  |
