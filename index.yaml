@@ -3,6 +3,18 @@ entries:
   retrom:
   - apiVersion: v2
     appVersion: 0.2.7
+    created: "2024-10-19T03:54:03.128041952Z"
+    description: A centralized game library/collection management service with a focus
+      on emulation. Configure once, play anywhere.
+    digest: 19571c95c7e484f111d94222779781c91e46fa8f31c5276d65e8d4c04a5222a0
+    icon: https://github.com/JMBeresford/retrom/blob/0650d22efe4b582db201b6607f3cf4271c244a5c/packages/client/app-icon.png?raw=true
+    name: retrom
+    type: application
+    urls:
+    - https://github.com/Hello-User/retrom/releases/download/0.1.4-helm/retrom-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 0.2.7
     created: "2024-10-19T05:27:42.814142668+02:00"
     description: A centralized game library/collection management service with a focus
       on emulation. Configure once, play anywhere.
@@ -13,4 +25,4 @@ entries:
     urls:
     - https://github.com/Hello-User/retrom/retrom-0.1.0.tgz
     version: 0.1.0
-generated: "2024-10-19T05:27:42.812682464+02:00"
+generated: "2024-10-19T03:54:03.128050889Z"
