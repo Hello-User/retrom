@@ -13,7 +13,7 @@ spec:
     name: retrom-backend
     port: {{ .Values.retrom.ports.backend.port }}
     targetPort: {{ .Values.retrom.ports.backend.port }}
-    {{- if eq .Values.retrom.type "NodePort" }}
+    {{- if eq .Values.retrom.service.type "NodePort" }}
     nodePort: {{ .Values.retrom.ports.backend.nodePort }}
     {{- end }}
   - protocol: TCP
@@ -23,7 +23,7 @@ spec:
     {{- if eq .Values.retrom.type "NodePort" }}
     nodePort: {{ .Values.retrom.ports.backend.nodePort }}
     {{- end }}
-  type: {{ .Values.retrom.type }}
+  type: {{ .Values.retrom.service.type }}
 
 ---
 {{- if .Values.postgres.enabled }}

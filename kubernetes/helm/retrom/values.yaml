@@ -23,7 +23,8 @@ retrom:
       claimName: retrom-config
       storageClass: nfs
       size: 1Mi
-  type: NodePort
+  service:
+    type: NodePort
   ports:
     backend:
       port: 5101
