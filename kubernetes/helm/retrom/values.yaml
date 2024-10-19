@@ -25,15 +25,19 @@ retrom:
       readOnly: false
       server: <server_ip>
       path: <nfs_path>/config
+  # -- Optional: Cluster network service type
   service:
     type: NodePort
   ports:
     backend:
+      # -- Optional: Port on which the service is exposed (when type is NodePort)
       nodePort: 31110
     frontend:
+      # -- Optional: Port on which the web ui is exposed (when type is NodePort)
       nodePort: 31111
 
 postgres:
+  # -- Optional: Disable if you run your own postgres server.
   enabled: true
   image:
     pullPolicy: Always
@@ -41,13 +45,12 @@ postgres:
     limits:
       cpu: "2"
       memory: 4Gi
+  # -- Required: password for the postgres user. The username and database name will be "postgres".
   password: please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)
-  service:
-    type: ClusterIP
-  ports:
-    db:
-      port: 5432
+  # -- Required: storage for the postgres database
   pvc:
+    # -- Required: Specify a StorageClass where the database will be stored
     storageClass: longhorn
     accessMode: ReadWriteOnce
+    # -- Optional: Maximum size of the database
     size: 1Gi

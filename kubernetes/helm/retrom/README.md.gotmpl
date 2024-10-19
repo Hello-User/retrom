@@ -14,7 +14,7 @@
 
 {{ template "chart.valuesSection" . }}
 
-## Example Values
+## Example Values and Retrom Config
 ```yaml
 namespace: retrom
 
@@ -39,6 +39,24 @@ postgres:
     storageClass: longhorn
     accessMode: ReadWriteMany
     size: 1Gi
+```
+```json
+{
+    "connection": {
+      "port": 5101,
+      "db_url": "postgres://postgres:please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)@retrom-db.retrom.svc.cluster.local/postgres"
+    },
+    "content_directories": [
+      {
+        "path": "/library1",
+        "storage_type": "MultiFileGame"
+      }
+    ],
+    "igdb": {
+      "client_secret": "super_secret_client_secret!!!1",
+      "client_id": "my_IGDB_ID_1234"
+    }
+  }
 ```
 
 {{ template "helm-docs.versionFooter" . }}
