@@ -93,3 +93,6 @@ jobs:
         env:
           CR_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           CR_RELEASE_NAME_TEMPLATE: '{{ .Version }}-helm'
+      - uses: oras-project/setup-oras@v1
+        with:
+          version: 1.2.0
