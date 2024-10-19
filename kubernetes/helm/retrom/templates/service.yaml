@@ -20,7 +20,7 @@ spec:
     name: retrom-frontend
     port: {{ .Values.retrom.ports.frontend.port }}
     targetPort: {{ .Values.retrom.ports.frontend.port }}
-    {{- if eq .Values.retrom.type "NodePort" }}
+    {{- if eq .Values.retrom.service.type "NodePort" }}
     nodePort: {{ .Values.retrom.ports.backend.nodePort }}
     {{- end }}
   type: {{ .Values.retrom.service.type }}
