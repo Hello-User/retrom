@@ -14,4 +14,31 @@
 
 {{ template "chart.valuesSection" . }}
 
+## Example Values
+```yaml
+namespace: retrom
+
+retrom:
+  volumes:
+    libraries:
+      - name: retrom-library1
+        type: nfs
+        server: <server_ip>
+        path: <nfs_path>/library1
+        mountPath: /library1
+        readOnly: false
+    config:
+      type: nfs
+      server: <server_ip>
+      path: <nfs_path>/config
+
+
+postgres:
+  password: please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)
+  pvc:
+    storageClass: longhorn
+    accessMode: ReadWriteMany
+    size: 1Gi
+```
+
 {{ template "helm-docs.versionFooter" . }}

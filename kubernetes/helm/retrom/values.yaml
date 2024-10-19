@@ -13,16 +13,18 @@ retrom:
     libraries:
       - name: retrom-library1
         type: pvc
-        claimName: retrom-library1-pvc
         accessMode: ReadWriteMany
         mountPath: /library1
         size: 1Mi
         storageClass: nfs
+        readOnly: false
     config:
       type: pvc
-      claimName: retrom-config
       storageClass: nfs
       size: 1Mi
+      readOnly: false
+      server: <server_ip>
+      path: <nfs_path>/config
   service:
     type: NodePort
   ports:
