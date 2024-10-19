@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.retrom.image.repository }}:{{ .Values.retrom.image.tag }}"
+        image: "ghcr.io/jmberesford/retrom-service:{{ .Values.retrom.image.tag }}"
         imagePullPolicy: {{ .Values.retrom.image.pullPolicy }}
         ports:
         - containerPort: 5101
@@ -34,9 +34,6 @@ spec:
           limits:
             cpu: {{ .Values.retrom.resources.limits.cpu }}
             memory: {{ .Values.retrom.resources.limits.memory }}
-          requests:
-            cpu: {{ .Values.retrom.resources.requests.cpu }}
-            memory: {{ .Values.retrom.resources.requests.memory }}
       volumes:
       {{- range .Values.retrom.volumes.libraries }}
       - name: {{ .name }}
@@ -92,9 +89,6 @@ spec:
           limits:
             cpu: {{ .Values.postgres.resources.limits.cpu }}
             memory: {{ .Values.postgres.resources.limits.memory }}
-          requests:
-            cpu: {{ .Values.postgres.resources.requests.cpu }}
-            memory: {{ .Values.postgres.resources.requests.memory }}
         env:
         - name: POSTGRES_PASSWORD
           value: {{ .Values.postgres.password }}
