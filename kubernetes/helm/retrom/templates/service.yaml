@@ -25,8 +25,8 @@ spec:
     {{- end }}
   type: {{ .Values.retrom.service.type }}
 
----
 {{- if .Values.postgres.enabled }}
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -42,5 +42,5 @@ spec:
     name: retrom-db
     port: {{ .Values.postgres.ports.db.port }}
     targetPort: {{ .Values.postgres.ports.db.port }}
-  type: {{ .Values.postgres.type }}
+  type: {{ .Values.postgres.service.type }}
 {{- end }}

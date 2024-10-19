@@ -28,10 +28,10 @@ retrom:
   ports:
     backend:
       port: 5101
-      nodePort:
+      nodePort: 31110
     frontend:
       port: 3000
-      nodePort:
+      nodePort: 31111
 
 postgres:
   enabled: true
@@ -43,7 +43,8 @@ postgres:
       cpu: "2"
       memory: 4Gi
   password: please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)
-  type: ClusterIP
+  service:
+    type: ClusterIP
   ports:
     db:
       port: 5432
