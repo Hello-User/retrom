@@ -6,12 +6,14 @@ on:
       - main
     paths:
       - 'kubernetes/helm/**'
-  
-  workflow_dispatch:
+
 env:
   HELM_DOCS_VERSION: '1.14.2'
+
+permissions: read-all
+
 jobs:
-  package-helm-chart:
+  package-and-publish-helm-chart:
     permissions:
       contents: write
       packages: write
@@ -69,21 +71,6 @@ jobs:
         run: |
           helm package ./kubernetes/helm/retrom --version ${{ steps.set-variables.outputs.VERSION }}
           helm push ./retrom-${{ steps.set-variables.outputs.VERSION }}.tgz oci://${{ steps.set-variables.outputs.REPOSITORY }}/charts          
-  
-  publish-helm-chart:
-    permissions:
-      id-token: write
-      packages: write
-      contents: write
-      actions: read
-      deployments: read
-      pull-requests: read
-      
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
@@ -93,6 +80,7 @@ jobs:
         env:
           CR_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           CR_RELEASE_NAME_TEMPLATE: '{{ .Version }}-helm'
+
       - uses: oras-project/setup-oras@v1
         with:
           version: 1.2.0
