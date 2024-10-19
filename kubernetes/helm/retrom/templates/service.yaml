@@ -21,7 +21,7 @@ spec:
     port: {{ .Values.retrom.ports.frontend.port }}
     targetPort: {{ .Values.retrom.ports.frontend.port }}
     {{- if eq .Values.retrom.service.type "NodePort" }}
-    nodePort: {{ .Values.retrom.ports.backend.nodePort }}
+    nodePort: {{ .Values.retrom.ports.frontend.nodePort }}
     {{- end }}
   type: {{ .Values.retrom.service.type }}
 
