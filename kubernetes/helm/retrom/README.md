@@ -18,7 +18,6 @@ A centralized game library/collection management service with a focus on emulati
 | postgres.pvc.accessMode | string | `"ReadWriteOnce"` |  |
 | postgres.pvc.size | string | `"1Gi"` |  |
 | postgres.pvc.storageClass | string | `"longhorn"` |  |
-| postgres.replicas | int | `1` |  |
 | postgres.resources.limits.cpu | string | `"2"` |  |
 | postgres.resources.limits.memory | string | `"4Gi"` |  |
 | postgres.service.type | string | `"ClusterIP"` |  |
