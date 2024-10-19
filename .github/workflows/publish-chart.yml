@@ -41,7 +41,7 @@
           run: |
             git checkout -B main # Switch to the main branch
             git add .
-            git commit -m "Update README.md"
+            git diff-index --quiet HEAD || git commit -m "Update README.md"
             git push origin main
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
