@@ -59,6 +59,17 @@
           env:
             CR_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
             CR_RELEASE_NAME_TEMPLATE: '{{ .Version }}-helm'
+        - uses: sigstore/cosign-installer@v3.5.0
+        - name: Push chart to GHCR
+          run: |
+            shopt -s nullglob
+            for pkg in .cr-release-packages/*; do
+              if [ -z "${pkg:-}" ]; then
+                break
+              fi
+              helm push "${pkg}" oci://ghcr.io/${{ github.actor }}/charts |& tee .digest
+              cosign sign --yes $(cat .digest | awk -F "[, ]+" '/Pushed/{print $NF}')
+            done
         - uses: oras-project/setup-oras@v1
           with:
             version: 1.2.0
