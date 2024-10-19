@@ -32,7 +32,30 @@ jobs:
         run: |
           echo ${{ steps.set-variables.outputs.REPOSITORY }}
           echo ${{ steps.set-variables.outputs.VERSION }}          
-
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+      - name: Configure Git
+        run: |
+          git config user.name "helm-bot"
+          git config user.email "helm-bot@users.noreply.github.com"
+      - name: install helm-docs
+        run: |
+          cd /tmp
+          wget https://github.com/norwoodj/helm-docs/releases/download/v${{env.HELM_DOCS_VERSION}}/helm-docs_${{env.HELM_DOCS_VERSION}}_Linux_x86_64.tar.gz
+          tar -xvf helm-docs_${{env.HELM_DOCS_VERSION}}_Linux_x86_64.tar.gz
+          sudo mv helm-docs /usr/local/sbin
+      - name: run helm-docs
+        run: |
+          helm-docs .
+          helm-docs --dry-run > kubernetes/helm/README.md
+      - name: Commit and push README.md
+        run: |
+          git checkout -B main # Switch to the main branch
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Update README.md"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Login to GitHub Container Registry
         uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
         with:
