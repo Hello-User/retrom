@@ -3,28 +3,51 @@ namespace: retrom-helm
 retrom:
   replicas: 1
   image:
+    # -- Optional: The version of Retrom to deploy
     tag: latest
     pullPolicy: Always
   resources:
+    # -- Optional: Maximum resources for the postgres container
     limits:
       cpu: "2"
       memory: 4Gi
   volumes:
+    # -- Required: Dictionary of external libraries
     libraries:
       - name: retrom-library1
-        type: pvc
+        # -- Required: nfs or pvc
+        type: nfs
         accessMode: ReadWriteMany
+        # -- Required: Mount path within the container
         mountPath: /library1
+        # -- Optional: NFS server IP. No effect when type is pvc
+        server: <server_ip>
+        # -- Optional: NFS path. No effect when type is pvc
+        path: <nfs_path>/config
+        # -- Optional: Size of the PVC. No effect when type is nfs
         size: 1Mi
-        storageClass: nfs
+        # -- Optional: Whether the library is read-only. No effect when type is pvc
         readOnly: false
+        # -- Optional: Storage class for the PVC. No effect when type is nfs
+        storageClass: longhorn
+        # -- Optional: Name of the PVC. No effect when type is nfs
+        claimName: retrom-library1
+    # -- Required: Location of the config folder
     config:
-      type: pvc
-      storageClass: nfs
-      size: 1Mi
-      readOnly: false
+      # -- Required: nfs or pvc
+      type: nfs
+      # -- Optional: NFS server IP. No effect when type is pvc
       server: <server_ip>
+      # -- Optional: NFS path. No effect when type is pvc
       path: <nfs_path>/config
+      # -- Optional: Size of the PVC. No effect when type is nfs
+      size: 1Mi
+      # -- Optional: Whether the library is read-only. No effect when type is pvc
+      readOnly: false
+      # -- Optional: Storage class for the PVC. No effect when type is nfs
+      storageClass: longhorn
+      # -- Optional: Name of the PVC. No effect when type is nfs
+      claimName: retrom-config
   # -- Optional: Cluster network service type
   service:
     type: NodePort
@@ -37,15 +60,16 @@ retrom:
       nodePort: 31111
 
 postgres:
-  # -- Optional: Disable if you run your own postgres server.
+  # -- Optional: Disable if you run your own postgres server
   enabled: true
   image:
     pullPolicy: Always
   resources:
     limits:
+      # -- Optional: Maximum resources for the postgres container
       cpu: "2"
       memory: 4Gi
-  # -- Required: password for the postgres user. The username and database name will be "postgres".
+  # -- Required: password for the postgres user. The username and database name will be "postgres"
   password: please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)
   # -- Required: storage for the postgres database
   pvc:
