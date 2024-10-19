@@ -48,7 +48,6 @@ postgres:
       cpu: 200m
       memory: 2Gi
   password: please_changeme_and_maybe_try_to_use_a_kubernetes_secret_:)
-  pvc: retrom-db-data
   type: ClusterIP
   ports:
     db:
@@ -56,4 +55,4 @@ postgres:
   pvc:
     storageClass: local
     accessMode: ReadWriteMany
-    size: 16Gi
+    size: 1Gi

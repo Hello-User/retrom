@@ -101,5 +101,5 @@ spec:
       volumes:
         - name: {{ .Chart.Name }}-db-data
           persistentVolumeClaim:
-            claimName: {{ .Values.postgres.pvc }}
+            claimName: {{ .Chart.Name }}-db-data
 {{- end }}
